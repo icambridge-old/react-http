@@ -11,16 +11,19 @@ class Server extends EventEmitter implements ServerInterface
 {
     private $io;
 
-    public function __construct(SocketServerInterface $io)
+    public function __construct(SocketServerInterface $io, RequestHeaderParserInterface $parserPrototype = null)
     {
         $this->io = $io;
 
-        $this->io->on('connection', function ($conn) {
+        if (!isset($parserPrototype)) {
+            $parserPrototype = new RequestHeaderParser();
+        }
+
+        $this->io->on('connection', function ($conn) use ($parserPrototype) {
             // TODO: http 1.1 keep-alive
             // TODO: chunked transfer encoding (also for outgoing data)
             // TODO: multipart parsing
-
-            $parser = new RequestHeaderParser();
+            $parser = clone $parserPrototype;
             $parser->on('headers', function (Request $request, $bodyBuffer) use ($conn, $parser) {
                 // attach remote ip to the request as metadata
                 $request->remoteAddress = $conn->getRemoteAddress();
