@@ -6,15 +6,25 @@ use Icambridge\Http\Server;
 
 class ServerTest extends TestCase
 {
+    protected $server;
+
+    protected $io;
+
+    public function setUp()
+    {
+        $requestParser = new ParserStub();
+        $this->io = new ServerStub();
+
+        $this->server = new Server($this->io, $requestParser);
+    }
+
     public function testRequestEventIsEmitted()
     {
-        $io = new ServerStub();
 
-        $server = new Server($io);
-        $server->on('request', $this->expectCallableOnce());
+        $this->server->on('request', $this->expectCallableOnce());
 
         $conn = new ConnectionStub();
-        $io->emit('connection', array($conn));
+        $this->io->emit('connection', array($conn));
 
         $data = $this->createGetRequest();
         $conn->emit('data', array($data));
@@ -22,15 +32,12 @@ class ServerTest extends TestCase
 
     public function testRequestEvent()
     {
-        $io = new ServerStub();
-
         $i = 0;
 
-        $server = new Server($io);
-        $server->on('request', function ($request, $response) use (&$i) {
+        $this->server->on('request', function ($request, $response) use (&$i) {
             $i++;
 
-            $this->assertInstanceOf('Icambridge\Http\Request', $request);
+            $this->assertInstanceOf('Icambridge\Http\Request\Request', $request);
             $this->assertSame('/', $request->getPath());
             $this->assertSame('GET', $request->getMethod());
             $this->assertSame('127.0.0.1', $request->remoteAddress);
@@ -39,7 +46,7 @@ class ServerTest extends TestCase
         });
 
         $conn = new ConnectionStub();
-        $io->emit('connection', array($conn));
+        $this->io->emit('connection', array($conn));
 
         $data = $this->createGetRequest();
         $conn->emit('data', array($data));
@@ -49,16 +56,14 @@ class ServerTest extends TestCase
 
     public function testResponseContainsPoweredByHeader()
     {
-        $io = new ServerStub();
 
-        $server = new Server($io);
-        $server->on('request', function ($request, $response) {
+        $this->server->on('request', function ($request, $response) {
             $response->writeHead();
             $response->end();
         });
 
         $conn = new ConnectionStub();
-        $io->emit('connection', array($conn));
+        $this->io->emit('connection', array($conn));
 
         $data = $this->createGetRequest();
         $conn->emit('data', array($data));

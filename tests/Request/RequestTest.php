@@ -2,7 +2,8 @@
 
 namespace Icambridge\Tests\Http;
 
-use Icambridge\Http\Request;
+use Icambridge\Http\Request\Request;
+use Icambridge\Tests\Http\TestCase;
 
 class RequestTest extends TestCase
 {

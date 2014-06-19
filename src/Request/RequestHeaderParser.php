@@ -1,6 +1,6 @@
 <?php
 
-namespace Icambridge\Http;
+namespace Icambridge\Http\Request;
 
 use Evenement\EventEmitter;
 use Guzzle\Parser\Message\MessageParser;

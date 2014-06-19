@@ -1,8 +1,9 @@
 <?php
 
-namespace Icambridge\Tests\Http;
+namespace Icambridge\Tests\Http\Request;
 
-use Icambridge\Http\RequestHeaderParser;
+use Icambridge\Http\Request\RequestHeaderParser;
+use Icambridge\Tests\Http\TestCase;
 
 class RequestHeaderParserTest extends TestCase
 {
@@ -45,7 +46,7 @@ class RequestHeaderParserTest extends TestCase
         $data .= 'RANDOM DATA';
         $parser->feed($data);
 
-        $this->assertInstanceOf('Icambridge\Http\Request', $request);
+        $this->assertInstanceOf('Icambridge\Http\Request\Request', $request);
         $this->assertSame('GET', $request->getMethod());
         $this->assertSame('/', $request->getPath());
         $this->assertSame(array(), $request->getQuery());
@@ -83,7 +84,7 @@ class RequestHeaderParserTest extends TestCase
         $data = $this->createAdvancedPostRequest();
         $parser->feed($data);
 
-        $this->assertInstanceOf('Icambridge\Http\Request', $request);
+        $this->assertInstanceOf('Icambridge\Http\Request\Request', $request);
         $this->assertSame('POST', $request->getMethod());
         $this->assertSame('/foo', $request->getPath());
         $this->assertSame(array('bar' => 'baz'), $request->getQuery());

@@ -1,6 +1,6 @@
 <?php
 
-namespace Icambridge\Http;
+namespace Icambridge\Http\Request;
 
 interface RequestHeaderParserInterface
 {

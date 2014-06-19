@@ -5,21 +5,16 @@ namespace Icambridge\Http;
 use Evenement\EventEmitter;
 use React\Socket\ServerInterface as SocketServerInterface;
 use React\Socket\ConnectionInterface;
+use Icambridge\Http\Request\Request;
+use Icambridge\Http\Request\RequestHeaderParserInterface;
 
 /** @event request */
 class Server extends EventEmitter implements ServerInterface
 {
-    private $io;
-
-    public function __construct(SocketServerInterface $io, RequestHeaderParserInterface $parserPrototype = null)
+    public function __construct(SocketServerInterface $io, RequestHeaderParserInterface $parserPrototype)
     {
-        $this->io = $io;
 
-        if (!isset($parserPrototype)) {
-            $parserPrototype = new RequestHeaderParser();
-        }
-
-        $this->io->on('connection', function ($conn) use ($parserPrototype) {
+        $io->on('connection', function ($conn) use ($parserPrototype) {
             // TODO: http 1.1 keep-alive
             // TODO: chunked transfer encoding (also for outgoing data)
             // TODO: multipart parsing
