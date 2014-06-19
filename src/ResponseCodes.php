@@ -1,6 +1,6 @@
 <?php
 
-namespace React\Http;
+namespace Icambridge\Http;
 
 /**
  * This is copy-pasted from Symfony2's Response class

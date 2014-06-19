@@ -12,7 +12,12 @@
     },
     "autoload": {
         "psr-4": {
-            "React\\Http\\": "src"
+            "Icambridge\\Http\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Icambridge\\Tests\\Http\\": "tests"
         }
     },
     "extra": {

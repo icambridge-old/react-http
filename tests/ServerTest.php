@@ -1,8 +1,8 @@
 <?php
 
-namespace React\Tests\Http;
+namespace Icambridge\Tests\Http;
 
-use React\Http\Server;
+use Icambridge\Http\Server;
 
 class ServerTest extends TestCase
 {
@@ -30,12 +30,12 @@ class ServerTest extends TestCase
         $server->on('request', function ($request, $response) use (&$i) {
             $i++;
 
-            $this->assertInstanceOf('React\Http\Request', $request);
+            $this->assertInstanceOf('Icambridge\Http\Request', $request);
             $this->assertSame('/', $request->getPath());
             $this->assertSame('GET', $request->getMethod());
             $this->assertSame('127.0.0.1', $request->remoteAddress);
 
-            $this->assertInstanceOf('React\Http\Response', $response);
+            $this->assertInstanceOf('Icambridge\Http\Response', $response);
         });
 
         $conn = new ConnectionStub();

@@ -1,8 +1,8 @@
 <?php
 
-namespace React\Tests\Http;
+namespace Icambridge\Tests\Http;
 
-use React\Http\Request;
+use Icambridge\Http\Request;
 
 class RequestTest extends TestCase
 {

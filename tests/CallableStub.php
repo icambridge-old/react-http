@@ -1,6 +1,6 @@
 <?php
 
-namespace React\Tests\Http;
+namespace Icambridge\Tests\Http;
 
 class CallableStub
 {

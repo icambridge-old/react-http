@@ -1,19 +1,8 @@
 # Http Component
 
-[![Build Status](https://secure.travis-ci.org/reactphp/http.png?branch=master)](http://travis-ci.org/reactphp/http)
+[![Build Status](https://secure.travis-ci.org/icambridge/react-http.png?branch=master)](http://travis-ci.org/icambridge/react-http)
 
-Library for building an evented http server.
-
-This component builds on top of the `Socket` component to implement HTTP. Here
-are the main concepts:
-
-* **Server**: Attaches itself to an instance of
-  `React\Socket\ServerInterface`, parses any incoming data as HTTP, emits a
-  `request` event for each request.
-* **Request**: A `ReadableStream` which streams the request body and contains
-  meta data which was parsed from the request header.
-* **Response** A `WritableStream` which streams the response body. You can set
-  the status code and response headers via the `writeHead()` method.
+Library for building an evented http server. An experimental fork of [ReactPHP HTTP](https://github.com/reactphp/http).
 
 ## Usage
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace React\Tests\Http;
+namespace Icambridge\Tests\Http;
 
-use React\Http\Response;
+use Icambridge\Http\Response;
 
 class ResponseTest extends TestCase
 {

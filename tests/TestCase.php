@@ -1,6 +1,6 @@
 <?php
 
-namespace React\Tests\Http;
+namespace Icambridge\Tests\Http;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -36,6 +36,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     protected function createCallableMock()
     {
-        return $this->getMock('React\Tests\Http\CallableStub');
+        return $this->getMock('Icambridge\Tests\Http\CallableStub');
     }
 }

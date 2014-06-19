@@ -1,6 +1,6 @@
 <?php
 
-namespace React\Http;
+namespace Icambridge\Http;
 
 use Evenement\EventEmitterInterface;
 
