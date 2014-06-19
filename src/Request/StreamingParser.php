@@ -9,7 +9,7 @@ use Guzzle\Parser\Message\MessageParser;
  * @event headers
  * @event error
  */
-class RequestHeaderParser extends EventEmitter implements RequestHeaderParserInterface
+class StreamingParser extends EventEmitter implements ParserInterface
 {
     private $buffer = '';
     private $maxSize = 4096;

@@ -4,9 +4,9 @@ namespace Icambridge\Tests\Http;
 
 use Evenement\EventEmitter;
 use Icambridge\Http\Request\Request;
-use Icambridge\Http\Request\RequestHeaderParserInterface;
+use Icambridge\Http\Request\ParserInterface;
 
-class ParserStub extends EventEmitter implements RequestHeaderParserInterface
+class ParserStub extends EventEmitter implements ParserInterface
 {
     public function feed($data)
     {

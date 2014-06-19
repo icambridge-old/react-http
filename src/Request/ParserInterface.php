@@ -2,7 +2,7 @@
 
 namespace Icambridge\Http\Request;
 
-interface RequestHeaderParserInterface
+interface ParserInterface
 {
     public function feed($data);
 

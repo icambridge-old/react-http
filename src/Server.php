@@ -6,12 +6,12 @@ use Evenement\EventEmitter;
 use React\Socket\ServerInterface as SocketServerInterface;
 use React\Socket\ConnectionInterface;
 use Icambridge\Http\Request\Request;
-use Icambridge\Http\Request\RequestHeaderParserInterface;
+use Icambridge\Http\Request\ParserInterface;
 
 /** @event request */
 class Server extends EventEmitter implements ServerInterface
 {
-    public function __construct(SocketServerInterface $io, RequestHeaderParserInterface $parserPrototype)
+    public function __construct(SocketServerInterface $io, ParserInterface $parserPrototype)
     {
 
         $io->on('connection', function ($conn) use ($parserPrototype) {

@@ -2,14 +2,14 @@
 
 namespace Icambridge\Tests\Http\Request;
 
-use Icambridge\Http\Request\RequestHeaderParser;
+use Icambridge\Http\Request\StreamingParser;
 use Icambridge\Tests\Http\TestCase;
 
 class RequestHeaderParserTest extends TestCase
 {
     public function testSplitShouldHappenOnDoubleCrlf()
     {
-        $parser = new RequestHeaderParser();
+        $parser = new StreamingParser();
         $parser->on('headers', $this->expectCallableNever());
 
         $parser->feed("GET / HTTP/1.1\r\n");
@@ -24,7 +24,7 @@ class RequestHeaderParserTest extends TestCase
 
     public function testFeedInOneGo()
     {
-        $parser = new RequestHeaderParser();
+        $parser = new StreamingParser();
         $parser->on('headers', $this->expectCallableOnce());
 
         $data = $this->createGetRequest();
@@ -36,7 +36,7 @@ class RequestHeaderParserTest extends TestCase
         $request = null;
         $bodyBuffer = null;
 
-        $parser = new RequestHeaderParser();
+        $parser = new StreamingParser();
         $parser->on('headers', function ($parsedRequest, $parsedBodyBuffer) use (&$request, &$bodyBuffer) {
             $request = $parsedRequest;
             $bodyBuffer = $parsedBodyBuffer;
@@ -60,7 +60,7 @@ class RequestHeaderParserTest extends TestCase
     {
         $bodyBuffer = null;
 
-        $parser = new RequestHeaderParser();
+        $parser = new StreamingParser();
         $parser->on('headers', function ($parsedRequest, $parsedBodyBuffer) use (&$bodyBuffer) {
             $bodyBuffer = $parsedBodyBuffer;
         });
@@ -76,7 +76,7 @@ class RequestHeaderParserTest extends TestCase
     {
         $request = null;
 
-        $parser = new RequestHeaderParser();
+        $parser = new StreamingParser();
         $parser->on('headers', function ($parsedRequest, $parsedBodyBuffer) use (&$request) {
             $request = $parsedRequest;
         });
@@ -101,7 +101,7 @@ class RequestHeaderParserTest extends TestCase
     {
         $error = null;
 
-        $parser = new RequestHeaderParser();
+        $parser = new StreamingParser();
         $parser->on('headers', $this->expectCallableNever());
         $parser->on('error', function ($message) use (&$error) {
             $error = $message;
