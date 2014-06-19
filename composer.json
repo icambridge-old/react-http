@@ -1,6 +1,6 @@
 {
-    "name": "react/http",
-    "description": "Library for building an evented http server.",
+    "name": "icambridge/http",
+    "description": "A custom library for building an evented http server.",
     "keywords": ["http"],
     "license": "MIT",
     "require": {
