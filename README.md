@@ -10,12 +10,12 @@ This is an HTTP server which responds with `Hello World` to every request.
 ```php
     $loop = React\EventLoop\Factory::create();
     $socket = new React\Socket\Server($loop);
-    $requestFactory = new Icambridge\Http\Request\Factory\RequestFactory();
+
+    $requestFactory = new Icambridge\Http\Request\Factory\BodiedRequestFactory();
     $messageParser = new Guzzle\Parser\Message\MessageParser();
     $requestParser = new Icambridge\Http\Request\Parser($requestFactory, $messageParser);
-
-
-    $http = new React\Http\Server($socket);
+    $http = new Icambridge\Http\Server($socket, $requestParser);
+    
     $http->on('request', function ($request, $response) {
         $response->writeHead(200, array('Content-Type' => 'text/plain'));
         $response->end("Hello World!\n");
