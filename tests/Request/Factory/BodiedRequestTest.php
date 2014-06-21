@@ -13,7 +13,8 @@ class BodiedRequestTest extends TestCase
             'method' => 'GET',
             'request_url' => ['path' => '/test'],
             'version' => '1.0',
-            'headers' => []
+            'headers' => [],
+            'body'    => ''
         ];
 
         $factory = new BodiedRequestFactory();
@@ -27,12 +28,14 @@ class BodiedRequestTest extends TestCase
         $uri = '/test';
         $version = '1.0';
         $headers = [];
+        $body = 'Junk here';
 
         $data = [
             'method' => $method,
             'request_url' => ['path' => $uri, 'query' => null],
             'version' => $version,
-            'headers' => $headers
+            'headers' => $headers,
+            'body'    => $body
         ];
 
         $factory = new BodiedRequestFactory();
