@@ -2,33 +2,46 @@
 
 namespace Icambridge\Tests\Http\Request;
 
+use Icambridge\Http\Request\Factory\RequestFactory;
+use Icambridge\Http\Request\Request;
 use Icambridge\Http\Request\StreamingParser;
 use Icambridge\Tests\Http\TestCase;
 
-class RequestHeaderParserTest extends TestCase
+class StreamingParserTest extends TestCase
 {
+    /**
+     * @var StreamingParser
+     */
+    protected $parser;
+
+    protected $factory;
+
+    public function setUp()
+    {
+        $this->factory = new RequestFactory();
+        $this->parser = new StreamingParser($this->factory);
+    }
+
     public function testSplitShouldHappenOnDoubleCrlf()
     {
-        $parser = new StreamingParser();
-        $parser->on('headers', $this->expectCallableNever());
+        $this->parser->on('headers', $this->expectCallableNever());
 
-        $parser->feed("GET / HTTP/1.1\r\n");
-        $parser->feed("Host: example.com:80\r\n");
-        $parser->feed("Connection: close\r\n");
+        $this->parser->feed("GET / HTTP/1.1\r\n");
+        $this->parser->feed("Host: example.com:80\r\n");
+        $this->parser->feed("Connection: close\r\n");
 
-        $parser->removeAllListeners();
-        $parser->on('headers', $this->expectCallableOnce());
+        $this->parser->removeAllListeners();
+        $this->parser->on('headers', $this->expectCallableOnce());
 
-        $parser->feed("\r\n");
+        $this->parser->feed("\r\n");
     }
 
     public function testFeedInOneGo()
     {
-        $parser = new StreamingParser();
-        $parser->on('headers', $this->expectCallableOnce());
+        $this->parser->on('headers', $this->expectCallableOnce());
 
         $data = $this->createGetRequest();
-        $parser->feed($data);
+        $this->parser->feed($data);
     }
 
     public function testHeadersEventShouldReturnRequestAndBodyBuffer()
@@ -36,7 +49,7 @@ class RequestHeaderParserTest extends TestCase
         $request = null;
         $bodyBuffer = null;
 
-        $parser = new StreamingParser();
+        $parser = $this->parser;
         $parser->on('headers', function ($parsedRequest, $parsedBodyBuffer) use (&$request, &$bodyBuffer) {
             $request = $parsedRequest;
             $bodyBuffer = $parsedBodyBuffer;
@@ -60,7 +73,7 @@ class RequestHeaderParserTest extends TestCase
     {
         $bodyBuffer = null;
 
-        $parser = new StreamingParser();
+        $parser = $this->parser;
         $parser->on('headers', function ($parsedRequest, $parsedBodyBuffer) use (&$bodyBuffer) {
             $bodyBuffer = $parsedBodyBuffer;
         });
@@ -76,7 +89,7 @@ class RequestHeaderParserTest extends TestCase
     {
         $request = null;
 
-        $parser = new StreamingParser();
+        $parser = $this->parser;
         $parser->on('headers', function ($parsedRequest, $parsedBodyBuffer) use (&$request) {
             $request = $parsedRequest;
         });
@@ -101,7 +114,7 @@ class RequestHeaderParserTest extends TestCase
     {
         $error = null;
 
-        $parser = new StreamingParser();
+        $parser = $this->parser;
         $parser->on('headers', $this->expectCallableNever());
         $parser->on('error', function ($message) use (&$error) {
             $error = $message;
