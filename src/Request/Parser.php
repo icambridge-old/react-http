@@ -3,27 +3,34 @@
 namespace Icambridge\Http\Request;
 
 use Evenement\EventEmitter;
-use Guzzle\Parser\Message\MessageParser;
+use Guzzle\Parser\Message\MessageParserInterface;
 use Icambridge\Http\Request\Factory\RequestFactoryInterface;
+
 
 /**
  * @event headers
  * @event error
  */
-class StreamingParser extends EventEmitter implements ParserInterface
+class Parser extends EventEmitter implements ParserInterface
 {
     private $buffer = '';
 
     private $maxSize = 4096;
 
     /**
+     * @var MessageParserInterface
+     */
+    private $parser;
+
+    /**
      * @var RequestFactoryInterface
      */
     private $factory;
 
-    function __construct(RequestFactoryInterface $factory)
+    function __construct(RequestFactoryInterface $factory, MessageParserInterface $parser)
     {
         $this->factory = $factory;
+        $this->parser  = $parser;
     }
 
     public function feed($data)
@@ -46,11 +53,9 @@ class StreamingParser extends EventEmitter implements ParserInterface
 
     public function parseRequest($data)
     {
-        list($headers, $bodyBuffer) = explode("\r\n\r\n", $data, 2);
+        $parsed = $this->parser->parseRequest($data);
 
-        $parser = new MessageParser();
-        $parsed = $parser->parseRequest($headers."\r\n\r\n");
-
+        $bodyBuffer = (isset($parsed['body'])) ? $parsed['body'] : "";
         $request = $this->factory->get($parsed);
 
         return array($request, $bodyBuffer);

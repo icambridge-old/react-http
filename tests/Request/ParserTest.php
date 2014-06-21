@@ -2,24 +2,21 @@
 
 namespace Icambridge\Tests\Http\Request;
 
+use Guzzle\Parser\Message\MessageParser;
 use Icambridge\Http\Request\Factory\RequestFactory;
-use Icambridge\Http\Request\Request;
-use Icambridge\Http\Request\StreamingParser;
+use Icambridge\Http\Request\Parser;
 use Icambridge\Tests\Http\TestCase;
 
-class StreamingParserTest extends TestCase
+class ParserTest extends TestCase
 {
     /**
-     * @var StreamingParser
+     * @var Parser
      */
     protected $parser;
 
-    protected $factory;
-
     public function setUp()
     {
-        $this->factory = new RequestFactory();
-        $this->parser = new StreamingParser($this->factory);
+        $this->parser = new Parser(new RequestFactory(), new MessageParser());
     }
 
     public function testSplitShouldHappenOnDoubleCrlf()
