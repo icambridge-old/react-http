@@ -2,6 +2,7 @@
 
 namespace Icambridge\Http\Request\Factory;
 
+use Icambridge\Http\Request\BodiedRequest;
 use Icambridge\Http\Request\Request;
 
 class BodiedRequestFactory implements RequestFactoryInterface
@@ -13,7 +14,7 @@ class BodiedRequestFactory implements RequestFactoryInterface
             parse_str($data['request_url']['query'], $parsedQuery);
         }
 
-        return new Request(
+        return new BodiedRequest(
             $data['method'],
             $data['request_url']['path'],
             $parsedQuery,
