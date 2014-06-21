@@ -15,7 +15,7 @@ This is an HTTP server which responds with `Hello World` to every request.
     $messageParser = new Guzzle\Parser\Message\MessageParser();
     $requestParser = new Icambridge\Http\Request\Parser($requestFactory, $messageParser);
     $http = new Icambridge\Http\Server($socket, $requestParser);
-    
+
     $http->on('request', function ($request, $response) {
         $response->writeHead(200, array('Content-Type' => 'text/plain'));
         $response->end("Hello World!\n");

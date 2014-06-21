@@ -3,7 +3,7 @@
 namespace Icambridge\Tests\Http\Request\Factory;
 
 use Icambridge\Tests\Http\TestCase;
-use Icambridge\Http\Request\Factory\RequestFactory;
+use Icambridge\Http\Request\Factory\BodiedRequestFactory;
 
 class BodiedRequestTest extends TestCase
 {
@@ -16,7 +16,7 @@ class BodiedRequestTest extends TestCase
             'headers' => []
         ];
 
-        $factory = new RequestFactory();
+        $factory = new BodiedRequestFactory();
         $request = $factory->get($data);
         $this->assertInstanceOf('Icambridge\Http\Request\BodiedRequest', $request);
     }
@@ -35,7 +35,7 @@ class BodiedRequestTest extends TestCase
             'headers' => $headers
         ];
 
-        $factory = new RequestFactory();
+        $factory = new BodiedRequestFactory();
         $request = $factory->get($data);
 
         $this->assertEquals($method, $request->getMethod());
@@ -64,7 +64,7 @@ class BodiedRequestTest extends TestCase
             'body'    => $body
         ];
 
-        $factory = new RequestFactory();
+        $factory = new BodiedRequestFactory();
         $request = $factory->get($data);
         $this->assertInstanceOf('Icambridge\Http\Request\BodiedRequest', $request);
         $this->assertArrayHasKey($keyOne, $request->getQuery());
